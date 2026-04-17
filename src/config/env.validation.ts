@@ -39,5 +39,6 @@ export function validateEnv(config: EnvRecord) {
     POSTGRES_PASSWORD: getRequiredString(config, 'POSTGRES_PASSWORD'),
     POSTGRES_DB: getRequiredString(config, 'POSTGRES_DB'),
     DATABASE_URL: getRequiredString(config, 'DATABASE_URL'),
+    LOG_LEVEL: getRequiredString(config, 'LOG_LEVEL'), // 日志级别
   };
 }

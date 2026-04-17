@@ -1,4 +1,4 @@
-import { getAppEnvironment } from './env.util';
+import { getAppEnvironment, toNumber } from './env.util';
 
 export default () => ({
   app: {
@@ -13,5 +13,11 @@ export default () => ({
     password: process.env.POSTGRES_PASSWORD ?? '',
     name: process.env.POSTGRES_DB ?? '',
     url: process.env.DATABASE_URL ?? '',
+  },
+  logging: {
+    level:
+      process.env.LOG_LEVEL ||
+      (getAppEnvironment() === 'production' ? 'warn' : 'debug'),
+    slowRequestThreshold: toNumber(process.env.SLOW_REQUEST_THRESHOLD, 1000),
   },
 });

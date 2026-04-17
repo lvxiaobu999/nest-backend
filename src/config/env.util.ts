@@ -9,3 +9,8 @@ export function getEnvFilePaths(): string[] {
 
   return [`.env.${currentEnv}`, '.env'];
 }
+
+export function toNumber(value: string | undefined, fallback: number): number {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : fallback;
+}

@@ -1,12 +1,14 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import appConfig from './config/app.config';
+import configuration from './config/configuration';
 import { getEnvFilePaths } from './config/env.util';
 import { validateEnv } from './config/env.validation';
 import { PrismaModule } from './prisma/prisma.module';
 import { UsersModule } from './users/users.module';
+import { WinstonModule } from 'nest-winston';
+import { createWinstonLogger } from './common/logger/winston.logger';
 
 @Module({
   imports: [
@@ -15,8 +17,14 @@ import { UsersModule } from './users/users.module';
       isGlobal: true,
       cache: true,
       envFilePath: getEnvFilePaths(),
-      load: [appConfig],
+      load: [configuration],
       validate: validateEnv,
+    }),
+    /* 构建日志 */
+    WinstonModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) =>
+        createWinstonLogger(configService),
     }),
     PrismaModule,
     UsersModule,
