@@ -2,6 +2,7 @@ import { ConfigService } from '@nestjs/config';
 import { utilities as nestWinstonModuleUtilities } from 'nest-winston';
 import * as winston from 'winston';
 import 'winston-daily-rotate-file';
+import { getRequestId, getTraceId } from '../context/request-context';
 // import { getRequestId } from '../context/request-context';
 
 export const createWinstonLogger = (config: ConfigService) => {
@@ -10,7 +11,8 @@ export const createWinstonLogger = (config: ConfigService) => {
   const appName = config.get<string>('app.name') || 'nest-app-admin';
 
   const requestIdFormat = winston.format((info) => {
-    // info.requestId = getRequestId() || 'no-req-id';
+    info.requestId = getRequestId() || 'no-req-id';
+    info.traceId = getTraceId() || 'no-trace-id';
     return info;
   });
 
