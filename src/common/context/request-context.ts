@@ -8,8 +8,7 @@ export interface RequestContextData {
 const asyncLocalStorage = new AsyncLocalStorage<RequestContextData>();
 
 export const RequestContext = {
-  run: <T>(data: RequestContextData, callback: () => T): T =>
-    asyncLocalStorage.run(data, callback),
+  run: <T>(data: RequestContextData, callback: () => T): T => asyncLocalStorage.run(data, callback),
 
   get: (): RequestContextData | undefined => asyncLocalStorage.getStore(),
 };

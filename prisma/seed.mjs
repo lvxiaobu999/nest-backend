@@ -1,6 +1,6 @@
-import { loadEnv } from './load-env.mjs';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '@prisma/client';
+import { loadEnv } from './load-env.mjs';
 
 loadEnv();
 

@@ -9,11 +9,7 @@ import { RequestContext } from 'src/common/context/request-context';
   - stores request metadata in AsyncLocalStorage
   - returns IDs to the client for easier tracing
 */
-export function requestIdMiddleware(
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) {
+export function requestIdMiddleware(req: Request, res: Response, next: NextFunction) {
   const requestId = (req.headers['x-request-id'] as string) || randomUUID();
   const traceId = (req.headers['x-trace-id'] as string) || randomUUID();
 
