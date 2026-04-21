@@ -5,6 +5,7 @@ import { loadEnv } from './load-env.mjs';
 
 loadEnv();
 
+// 种子账号和业务演示数据都复用同一套 bcrypt 配置，避免初始化时写入明文密码。
 const PASSWORD_SALT_ROUNDS = 10;
 
 const adapter = new PrismaPg({
@@ -18,6 +19,7 @@ function toDateOnly(date) {
 }
 
 async function main() {
+  // 默认管理员账号使用哈希密码，便于直接联调登录接口。
   const demoAdminPassword = await bcrypt.hash('123456', PASSWORD_SALT_ROUNDS);
 
   await prisma.user.upsert({
