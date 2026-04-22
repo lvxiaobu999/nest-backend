@@ -47,7 +47,7 @@ export class UsersService {
       where: { username },
     });
 
-    if (!user || user.enabled !== 1) {
+    if (!user || user.enabled !== true) {
       return null;
     }
 
@@ -70,8 +70,8 @@ export class UsersService {
         password: await hashPassword(createUserDto.password),
         nickname: createUserDto.nickname,
         roleId: createUserDto.roleId,
-        isSuperAdmin: createUserDto.isSuperAdmin ?? 0,
-        enabled: createUserDto.enabled ?? 1,
+        isSuperAdmin: createUserDto.isSuperAdmin ?? false,
+        enabled: createUserDto.enabled ?? true,
         remark: createUserDto.remark,
       },
     });

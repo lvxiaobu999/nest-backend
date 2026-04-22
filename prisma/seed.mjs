@@ -27,16 +27,16 @@ async function main() {
     update: {
       nickname: '演示管理员',
       password: demoAdminPassword,
-      isSuperAdmin: 1,
-      enabled: 1,
+      isSuperAdmin: true,
+      enabled: true,
       remark: '用于本地联调的初始化账号',
     },
     create: {
       username: 'demo-admin',
       password: demoAdminPassword,
       nickname: '演示管理员',
-      isSuperAdmin: 1,
-      enabled: 1,
+      isSuperAdmin: true,
+      enabled: true,
       remark: '用于本地联调的初始化账号',
     },
   });
@@ -69,8 +69,8 @@ async function main() {
   for (const name of ['domain1.com', 'domain2.com', 'domain3.com']) {
     const domain = await prisma.dashboardDomain.upsert({
       where: { name },
-      update: { enabled: 1 },
-      create: { name, enabled: 1 },
+      update: { enabled: true },
+      create: { name, enabled: true },
     });
 
     domainRecords.push(domain);

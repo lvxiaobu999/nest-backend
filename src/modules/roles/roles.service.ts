@@ -62,7 +62,7 @@ export class RolesService {
         name: createRoleDto.name,
         code: createRoleDto.code,
         desc: createRoleDto.desc,
-        enabled: createRoleDto.enabled ?? 1,
+        enabled: createRoleDto.enabled ?? true,
         menus: this.buildCreateMenuRelation(createRoleDto.menuIds),
         permissions: this.buildCreatePermissionRelation(createRoleDto.permissionIds),
       },

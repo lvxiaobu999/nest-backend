@@ -3,7 +3,7 @@ export interface JwtPayload {
   sub: string;
   username: string;
   roleId: string | null;
-  isSuperAdmin: number;
+  isSuperAdmin: boolean | null;
   nickname: string;
   jti: string;
   iat?: number;
@@ -15,7 +15,7 @@ export interface AuthenticatedUser {
   userId: string;
   username: string;
   roleId: string | null;
-  isSuperAdmin: number;
+  isSuperAdmin: boolean | null;
   nickname: string;
   sessionId: string;
 }

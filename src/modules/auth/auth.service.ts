@@ -112,18 +112,18 @@ export class AuthService {
     menus: AuthMenuRecord[];
     permissions: AuthPermissionRecord[];
   }> {
-    if (user.isSuperAdmin === 1) {
+    if (user.isSuperAdmin === true) {
       const [menus, permissions] = await Promise.all([
         this.prismaService.menu.findMany({
           where: {
-            enabled: 1,
+            enabled: true,
           },
           select: authMenuSelect,
           orderBy: [{ order: 'asc' }, { createTime: 'asc' }],
         }),
         this.prismaService.permission.findMany({
           where: {
-            enabled: 1,
+            enabled: true,
           },
           select: authPermissionSelect,
           orderBy: [{ createTime: 'asc' }],
@@ -148,14 +148,14 @@ export class AuthService {
       select: {
         menus: {
           where: {
-            enabled: 1,
+            enabled: true,
           },
           select: authMenuSelect,
           orderBy: [{ order: 'asc' }, { createTime: 'asc' }],
         },
         permissions: {
           where: {
-            enabled: 1,
+            enabled: true,
           },
           select: authPermissionSelect,
           orderBy: [{ createTime: 'asc' }],
@@ -184,7 +184,7 @@ export class AuthService {
       const parents = await this.prismaService.menu.findMany({
         where: {
           id: { in: pendingParentIds },
-          enabled: 1,
+          enabled: true,
         },
         select: authMenuSelect,
       });

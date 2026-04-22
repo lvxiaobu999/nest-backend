@@ -1,4 +1,4 @@
-import { ArrayUnique, IsArray, IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
+import { ArrayUnique, IsArray, IsBoolean, IsOptional, IsString } from 'class-validator';
 
 // 角色创建参数，同时支持一次性绑定菜单和权限。
 export class CreateRoleDto {
@@ -13,10 +13,8 @@ export class CreateRoleDto {
   desc?: string;
 
   @IsOptional()
-  @IsInt()
-  @Min(0)
-  @Max(1)
-  enabled?: number;
+  @IsBoolean()
+  enabled?: boolean;
 
   @IsOptional()
   @IsArray()

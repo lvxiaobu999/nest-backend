@@ -1,4 +1,4 @@
-import { IsBoolean, IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
+import { IsBoolean, IsInt, IsOptional, IsString, Min } from 'class-validator';
 
 export class CreateMenuDto {
   @IsString()
@@ -34,10 +34,8 @@ export class CreateMenuDto {
   disabled?: boolean;
 
   @IsOptional()
-  @IsInt()
-  @Min(0)
-  @Max(1)
-  enabled?: number;
+  @IsBoolean()
+  enabled?: boolean;
 
   @IsOptional()
   @IsString()

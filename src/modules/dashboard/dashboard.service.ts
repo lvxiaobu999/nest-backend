@@ -24,7 +24,7 @@ export class DashboardService {
         orderBy: { reportTime: 'desc' },
       }),
       this.prismaService.dashboardDomain.findMany({
-        where: { enabled: 1 },
+        where: { enabled: true },
         orderBy: { name: 'asc' },
         select: {
           id: true,

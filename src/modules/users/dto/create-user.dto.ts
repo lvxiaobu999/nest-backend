@@ -1,4 +1,4 @@
-import { IsInt, IsNotEmpty, IsOptional, IsString, Min } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateUserDto {
   @IsString()
@@ -18,14 +18,12 @@ export class CreateUserDto {
   roleId?: string;
 
   @IsOptional()
-  @IsInt()
-  @Min(0)
-  isSuperAdmin?: number;
+  @IsBoolean()
+  isSuperAdmin?: boolean;
 
   @IsOptional()
-  @IsInt()
-  @Min(0)
-  enabled?: number;
+  @IsBoolean()
+  enabled?: boolean;
 
   @IsOptional()
   @IsString()

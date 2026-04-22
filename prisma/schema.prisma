@@ -11,7 +11,7 @@ model Permission {
   name       String   @unique
   code       String   @unique
   remark     String?
-  enabled    Int      @default(1)
+  enabled    Boolean  @default(true)
   menuId     String?
   menu       Menu?    @relation(fields: [menuId], references: [id], onDelete: Cascade)
   roles      Role[]
@@ -34,7 +34,7 @@ model Menu {
   hidden     Boolean?     @default(false)
   isLogin    Boolean?     @default(true)
   disabled   Boolean?     @default(false)
-  enabled    Int          @default(1)
+  enabled    Boolean      @default(true)
   children   Menu[]       @relation("MenuToMenu")
   parent     Menu?        @relation("MenuToMenu", fields: [parentId], references: [id], onDelete: Cascade)
   permissions Permission[]
@@ -51,7 +51,7 @@ model Role {
   name         String       @unique
   code         String       @unique
   desc         String?
-  enabled      Int          @default(1)
+  enabled      Boolean      @default(true)
   users        User[]
   menus        Menu[]
   permissions  Permission[]
@@ -65,11 +65,11 @@ model User {
   id           String   @id @default(uuid())
   username     String   @unique
   password     String
-  isSuperAdmin Int      @default(0)
+  isSuperAdmin Boolean?     @default(true)
   roleId       String?
   role         Role?    @relation(fields: [roleId], references: [id], onDelete: SetNull)
   nickname     String
-  enabled      Int      @default(1)
+  enabled      Boolean      @default(true)
   remark       String?
   createTime   DateTime @default(now())
   updateTime   DateTime @updatedAt
@@ -96,7 +96,7 @@ model DashboardCoreMetric {
 model DashboardDomain {
   id         String                @id @default(uuid())
   name       String                @unique
-  enabled    Int                   @default(1)
+  enabled    Boolean               @default(true)
   stats      DashboardDomainStat[]
   createTime DateTime              @default(now())
   updateTime DateTime              @updatedAt

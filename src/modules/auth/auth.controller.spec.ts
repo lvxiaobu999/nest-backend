@@ -59,7 +59,7 @@ describe('AuthController', () => {
         userId: 'user-1',
         username: 'demo-admin',
         roleId: null,
-        isSuperAdmin: 1,
+        isSuperAdmin: true,
         nickname: '演示管理员',
         sessionId: 'session-1',
       },

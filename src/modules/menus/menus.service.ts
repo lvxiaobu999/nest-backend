@@ -32,7 +32,7 @@ export class MenusService {
         hidden: createMenuDto.hidden,
         isLogin: createMenuDto.isLogin,
         disabled: createMenuDto.disabled,
-        enabled: createMenuDto.enabled ?? 1,
+        enabled: createMenuDto.enabled ?? true,
         parentId: createMenuDto.parentId,
       },
     });
