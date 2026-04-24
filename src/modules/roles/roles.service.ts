@@ -3,6 +3,7 @@ import { Prisma } from '@prisma/client';
 import { BusinessException } from '../../common/exceptions/business.exception';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateRoleDto } from './dto/create-role.dto';
+import { QueryRolesDto } from './dto/query-roles.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 
 const ROLE_BOUND_USERS_CODE = 10002;
@@ -39,8 +40,9 @@ type RoleWithRelations = Prisma.RoleGetPayload<{ include: typeof roleInclude }>;
 export class RolesService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async findAll(): Promise<RoleWithRelations[]> {
+  async findAll(query: QueryRolesDto): Promise<RoleWithRelations[]> {
     return this.prismaService.role.findMany({
+      where: this.buildWhereInput(query),
       include: roleInclude,
       orderBy: {
         createTime: 'desc',
@@ -112,6 +114,38 @@ export class RolesService {
       where: { id },
       include: roleInclude,
     });
+  }
+
+  private buildWhereInput(query: QueryRolesDto): Prisma.RoleWhereInput {
+    return {
+      enabled: query.enabled,
+      name: query.name
+        ? {
+            contains: query.name,
+            mode: 'insensitive',
+          }
+        : undefined,
+      code: query.code
+        ? {
+            contains: query.code,
+            mode: 'insensitive',
+          }
+        : undefined,
+      menus: query.menuId
+        ? {
+            some: {
+              id: query.menuId,
+            },
+          }
+        : undefined,
+      permissions: query.permissionId
+        ? {
+            some: {
+              id: query.permissionId,
+            },
+          }
+        : undefined,
+    };
   }
 
   private buildCreateMenuRelation(

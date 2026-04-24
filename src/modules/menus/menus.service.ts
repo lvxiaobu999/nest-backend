@@ -1,16 +1,32 @@
 import { Injectable } from '@nestjs/common';
-import { Menu } from '@prisma/client';
+import { Menu, Prisma } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateMenuDto } from './dto/create-menu.dto';
+import { QueryMenusDto } from './dto/query-menus.dto';
 import { UpdateMenuDto } from './dto/update-menu.dto';
+
+const menuInclude = Prisma.validator<Prisma.MenuInclude>()({
+  permissions: {
+    select: {
+      id: true,
+      name: true,
+      code: true,
+      enabled: true,
+    },
+  },
+});
+
+type MenuWithRelations = Prisma.MenuGetPayload<{ include: typeof menuInclude }>;
 
 @Injectable()
 export class MenusService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async findAll(): Promise<Menu[]> {
+  async findAll(query: QueryMenusDto): Promise<MenuWithRelations[]> {
     return this.prismaService.menu.findMany({
-      orderBy: { order: 'asc' },
+      where: this.buildWhereInput(query),
+      include: menuInclude,
+      orderBy: [{ order: 'asc' }, { createTime: 'asc' }],
     });
   }
 
@@ -60,5 +76,26 @@ export class MenusService {
     return this.prismaService.menu.delete({
       where: { id },
     });
+  }
+
+  private buildWhereInput(query: QueryMenusDto): Prisma.MenuWhereInput {
+    return {
+      parentId: query.parentId,
+      enabled: query.enabled,
+      hidden: query.hidden,
+      isLogin: query.isLogin,
+      title: query.title
+        ? {
+            contains: query.title,
+            mode: 'insensitive',
+          }
+        : undefined,
+      path: query.path
+        ? {
+            contains: query.path,
+            mode: 'insensitive',
+          }
+        : undefined,
+    };
   }
 }

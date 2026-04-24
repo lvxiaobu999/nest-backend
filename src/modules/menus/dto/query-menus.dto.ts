@@ -1,31 +1,18 @@
 import { Transform } from 'class-transformer';
-import { IsBoolean, IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
+import { IsBoolean, IsOptional, IsString } from 'class-validator';
 
-export class QueryUsersDto {
+export class QueryMenusDto {
   @IsOptional()
-  @Transform(({ value }) => Number(value))
-  @IsInt()
-  @Min(1)
-  page?: number = 1;
-
-  @IsOptional()
-  @Transform(({ value }) => Number(value))
-  @IsInt()
-  @Min(1)
-  @Max(100)
-  pageSize?: number = 10;
+  @IsString()
+  title?: string;
 
   @IsOptional()
   @IsString()
-  username?: string;
+  path?: string;
 
   @IsOptional()
   @IsString()
-  nickname?: string;
-
-  @IsOptional()
-  @IsString()
-  roleId?: string;
+  parentId?: string;
 
   @IsOptional()
   @Transform(({ value }) => {
@@ -55,5 +42,20 @@ export class QueryUsersDto {
     return value;
   })
   @IsBoolean()
-  isSuperAdmin?: boolean;
+  hidden?: boolean;
+
+  @IsOptional()
+  @Transform(({ value }) => {
+    if (value === 'true' || value === true) {
+      return true;
+    }
+
+    if (value === 'false' || value === false) {
+      return false;
+    }
+
+    return value;
+  })
+  @IsBoolean()
+  isLogin?: boolean;
 }

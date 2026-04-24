@@ -1,5 +1,6 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query } from '@nestjs/common';
 import { CreateMenuDto } from './dto/create-menu.dto';
+import { QueryMenusDto } from './dto/query-menus.dto';
 import { UpdateMenuDto } from './dto/update-menu.dto';
 import { MenusService } from './menus.service';
 
@@ -8,8 +9,8 @@ export class MenusController {
   constructor(private readonly menusService: MenusService) {}
 
   @Get()
-  findAll() {
-    return this.menusService.findAll();
+  findAll(@Query() query: QueryMenusDto) {
+    return this.menusService.findAll(query);
   }
 
   @Get(':id')

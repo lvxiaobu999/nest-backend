@@ -15,6 +15,7 @@ import { validateEnv } from './config/env.validation';
 import { AuthModule } from './modules/auth/auth.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { MenusModule } from './modules/menus/menus.module';
+import { PermissionsModule } from './modules/permissions/permissions.module';
 import { RolesModule } from './modules/roles/roles.module';
 import { UsersModule } from './modules/users/users.module';
 import { PrismaModule } from './prisma/prisma.module';
@@ -37,6 +38,7 @@ import { PrismaModule } from './prisma/prisma.module';
     DashboardModule,
     UsersModule,
     MenusModule,
+    PermissionsModule,
     RolesModule,
     AuthModule,
   ],

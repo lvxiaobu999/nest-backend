@@ -49,10 +49,12 @@ export class UsersService {
     const page = query.page ?? 1;
     const pageSize = query.pageSize ?? 10;
     const skip = (page - 1) * pageSize;
+    const where = this.buildWhereInput(query);
 
     const [total, list] = await Promise.all([
-      this.prismaService.user.count(),
+      this.prismaService.user.count({ where }),
       this.prismaService.user.findMany({
+        where,
         skip,
         take: pageSize,
         select: userListSelect,
@@ -139,6 +141,26 @@ export class UsersService {
       where: { id },
       select: userPublicSelect,
     });
+  }
+
+  private buildWhereInput(query: QueryUsersDto): Prisma.UserWhereInput {
+    return {
+      roleId: query.roleId,
+      enabled: query.enabled,
+      isSuperAdmin: query.isSuperAdmin,
+      username: query.username
+        ? {
+            contains: query.username,
+            mode: 'insensitive',
+          }
+        : undefined,
+      nickname: query.nickname
+        ? {
+            contains: query.nickname,
+            mode: 'insensitive',
+          }
+        : undefined,
+    };
   }
 
   private toSafeUser(user: User): SafeUser {
