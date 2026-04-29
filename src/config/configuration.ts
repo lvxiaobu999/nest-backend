@@ -2,7 +2,7 @@ import { getAppEnvironment, toNumber } from './env.util';
 
 export default () => ({
   app: {
-    name: process.env.APP_NAME ?? 'nest-fontend',
+    name: process.env.APP_NAME ?? 'nest-backend',
     nodeEnv: getAppEnvironment(),
     port: Number(process.env.PORT ?? 3000),
   },

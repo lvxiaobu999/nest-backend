@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'nest-fontend-api',
+      name: 'nest-backend-api',
       script: 'dist/main.js',
       cwd: __dirname,
       instances: 1,
