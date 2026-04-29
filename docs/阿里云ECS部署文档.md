@@ -66,8 +66,8 @@ npm install -g pm2
 sudo mkdir -p /www
 sudo chown -R $USER:$USER /www
 cd /www
-git clone <你的仓库地址> nest-fontend
-cd /www/nest-fontend
+git clone <你的仓库地址> nest-backend
+cd /www/nest-backend
 ```
 
 安装依赖：
@@ -139,7 +139,7 @@ NODE_ENV=production node dist/main.js
 
 本仓库已提供 `ecosystem.config.js`，默认配置：
 
-- 应用名：`nest-fontend-api`
+- 应用名：`nest-backend-api`
 - 启动文件：`dist/main.js`
 - 生产环境：`NODE_ENV=production`
 - 端口：`3000`
@@ -155,7 +155,7 @@ pm2 start ecosystem.config.js
 
 ```bash
 pm2 list
-pm2 logs nest-fontend-api
+pm2 logs nest-backend-api
 ```
 
 保存当前 PM2 进程列表：
@@ -179,9 +179,9 @@ pm2 save
 常用维护命令：
 
 ```bash
-pm2 restart nest-fontend-api
-pm2 stop nest-fontend-api
-pm2 delete nest-fontend-api
+pm2 restart nest-backend-api
+pm2 stop nest-backend-api
+pm2 delete nest-backend-api
 pm2 monit
 ```
 
@@ -254,11 +254,11 @@ sudo systemctl reload nginx
 3. 入方向规则
 4. 放行：
 
-| 端口 | 用途 |
-| --- | --- |
-| 22 | SSH 登录 |
-| 80 | HTTP |
-| 443 | HTTPS |
+| 端口 | 用途     |
+| ---- | -------- |
+| 22   | SSH 登录 |
+| 80   | HTTP     |
+| 443  | HTTPS    |
 
 生产环境不建议放行 `3000`。让 `3000` 只在服务器本机被 Nginx 访问即可。
 
@@ -278,20 +278,20 @@ sudo certbot --nginx
 以后更新代码时，进入项目目录：
 
 ```bash
-cd /www/nest-fontend
+cd /www/nest-backend
 git pull
 pnpm install --frozen-lockfile
 pnpm run prisma:generate:prod
 pnpm run prisma:migrate:deploy
 pnpm run build
-pm2 restart nest-fontend-api
+pm2 restart nest-backend-api
 ```
 
 检查：
 
 ```bash
 pm2 list
-pm2 logs nest-fontend-api
+pm2 logs nest-backend-api
 curl http://127.0.0.1:3000
 curl http://你的域名或公网IP
 ```
@@ -301,7 +301,7 @@ curl http://你的域名或公网IP
 接口访问不到时按这个顺序查：
 
 1. `pm2 list`：确认服务是否在线。
-2. `pm2 logs nest-fontend-api`：看应用报错。
+2. `pm2 logs nest-backend-api`：看应用报错。
 3. `curl http://127.0.0.1:3000`：确认 Nest 本机可访问。
 4. `sudo nginx -t`：确认 Nginx 配置正确。
 5. `sudo systemctl status nginx`：确认 Nginx 正常运行。
