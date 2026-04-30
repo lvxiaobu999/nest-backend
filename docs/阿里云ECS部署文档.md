@@ -99,6 +99,32 @@ LOG_LEVEL=warn
 pnpm run db:up:prod
 ```
 
+拉取镜像的时候可能会超时导致失败，这时看先配置一下国内的镜像加速器
+
+```bash
+sudo mkdir -p /etc/docker
+
+sudo tee /etc/docker/daemon.json <<-'EOF'
+{
+  "registry-mirrors": [
+    "https://docker.m.daocloud.io",
+    "https://dockerproxy.cn",
+    "https://hub-mirror.c.163.com"
+  ]
+}
+EOF
+```
+
+（提示：复制上面的整段代码，在终端里右键粘贴并按回车即可执行完毕。我试着阿里云上面的个人申请的加速器，还是失败）
+
+第二步：重启 Docker 服务让配置生效
+
+```bash
+sudo systemctl daemon-reload
+
+sudo systemctl restart docker
+```
+
 查看容器日志：
 
 ```bash
